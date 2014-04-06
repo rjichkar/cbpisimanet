@@ -76,7 +76,7 @@ public class MOGraphPane extends JPanel {
         g2d.drawString("% OF DISHONEST RECOMMENDATIONS", 700, 450);
 
         //Draw Histogram
-        //plotAttrOnXAxis(recommendedTrustListActual.size(), 25, g2d);
+        plotAttrOnXAxis(recommendedTrustListActual.size(), 25, g2d);
         drawHistogram(recommendedTrustListActual, highestSFIndex, 0, COLOR_VAR1, g2d);
         drawHistogram(recommendedTrustListWOD, highestSFIndex, 20, COLOR_VAR2, g2d);
         drawHistogram(recommendedTrustListWD, highestSFIndex, 40, COLOR_VAR3, g2d);

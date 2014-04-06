@@ -185,7 +185,7 @@ public class ControlsToobar implements IConfiguration {
                 boolean moMode = evaluatePerformanceCheckBox.isSelected() & meanOffsetScenarioRadioButton.isSelected();
                 if (moMode) {
                     MOGraphParameters moGraphParameters = scenarioPane.getmOGraphParameters();
-                    paramSet.add(moGraphParameters.getPercentDishonestRA()+"-"+moGraphParameters.getRecommendedTrustActual() + "-" + moGraphParameters.getRecommendedTrustWOD() + "-" + moGraphParameters.getRecommendedTrustWD());
+                    paramSet.add(moGraphParameters.getPercentDishonestRA() + "-" + moGraphParameters.getRecommendedTrustActual() + "-" + moGraphParameters.getRecommendedTrustWOD() + "-" + moGraphParameters.getRecommendedTrustWD());
 
                     Iterator<String> iterator = paramSet.iterator();
                     while (iterator.hasNext()) {
@@ -220,7 +220,14 @@ public class ControlsToobar implements IConfiguration {
                 }
             }
         });
-        
+
+        meanOffsetValueComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                paramSet.removeAll(paramSet);
+            }
+        });
+
         selectAttackComboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
