@@ -111,7 +111,7 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
 
         medianLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         stepOneTab.add(medianLabel);
-        medianLabel.setBounds(410, 260, 150, 20);
+        medianLabel.setBounds(410, 280, 150, 20);
 
         tabOneMessageLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         stepOneTab.add(tabOneMessageLabel);
@@ -144,7 +144,7 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
         freqDistPanel.add(freqDistScrollPane, java.awt.BorderLayout.CENTER);
 
         stepOneTab.add(freqDistPanel);
-        freqDistPanel.setBounds(0, 30, 1000, 402);
+        freqDistPanel.setBounds(0, 30, 1000, 220);
 
         tabbedPane.addTab("Step 1", stepOneTab);
 
@@ -169,7 +169,7 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
         sortedDFsPanel.add(sortedDFsScrollPane, java.awt.BorderLayout.CENTER);
 
         stepTwoTab.add(sortedDFsPanel);
-        sortedDFsPanel.setBounds(0, 30, 1000, 180);
+        sortedDFsPanel.setBounds(0, 30, 1000, 210);
 
         tabbedPane.addTab("Step 2", stepTwoTab);
 
@@ -203,7 +203,7 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
         resultTablePanel.add(resultTableScrollpane, java.awt.BorderLayout.CENTER);
 
         stepThreeTab.add(resultTablePanel);
-        resultTablePanel.setBounds(260, 290, 470, 140);
+        resultTablePanel.setBounds(260, 290, 470, 120);
 
         smoothingFactorTablePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Table 3:  Smoothing factor computation", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         smoothingFactorTablePanel.setLayout(new java.awt.BorderLayout());
@@ -491,21 +491,6 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {
                 System.exit(0);
             }
-            /*
-            Map<String, Object> resultMap = new TreeMap<>();
-            //Add results in Map
-            resultMap.put("Dishonest Recommendation Classes", dishonestReccomendationClasses);
-            resultMap.put("Final Trust Value", trustValue);
-            resultMap.put("Rcc Frequency", freqList.get(freqHighestIndex));
-            resultMap.put("Trust Decision", trustDecision);
-            int row = 0;
-            Iterator iterator = resultMap.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry mapEntry = (Map.Entry) iterator.next();
-                resultTable.getModel().setValueAt(mapEntry.getKey(), row, 0);
-                resultTable.getModel().setValueAt(mapEntry.getValue(), row, 1);
-                row++;
-            }*/
 
             return trustValue;
         }
@@ -534,13 +519,39 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
 
     private double computeTrustValueMethod3(String[] srDomainClasses, String[] rDomainFilteredClasses) {
         DecimalFormat dformat = new DecimalFormat("##.##");
-        return 0.0;
+        ArrayList<Double> trustedList = new ArrayList();
+        ArrayList<Double> nonTrustedList = new ArrayList();
+        double trustValue = 0.0;
+        double alpha = 0.0;
+        double beta = 0.0;
+
+        for (String str : rDomainFilteredClasses) {
+            double num = Double.parseDouble(str);
+            if (num <= 0.5) {
+                nonTrustedList.add(num);
+            } else {
+                trustedList.add(num);
+            }
+        }
+
+        if (trustedList.size() > nonTrustedList.size()) {
+           // alpha = trustedList.size() + sumArray((String[]) trustedList.toArray()) + 1;
+           // beta = nonTrustedList.size() + sumArray((String[]) nonTrustedList.toArray()) + 1;
+        } else if (trustedList.size() < nonTrustedList.size()) {
+              alpha = nonTrustedList.size() + sumArray(nonTrustedList.toArray()) + 1;
+              beta = trustedList.size() + sumArray(trustedList.toArray()) + 1;
+              System.out.println("NT ALPHA: "+alpha+" BETA: "+beta);
+        }
+
+        trustValue = alpha / (alpha + beta);
+        System.out.println("TESTING TRUST VALUE: "+trustValue);
+        return trustValue;
     }
 
-    private double sumArray(String[] strArray) {
+    private double sumArray(Object[] strArray) {
         double sum = 0.0;
-        for (String value : strArray) {
-            sum += (Double.parseDouble(value));
+        for (Object value : strArray) {
+            sum += (Double)value;
         }
         return sum;
     }
