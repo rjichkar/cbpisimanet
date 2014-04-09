@@ -36,7 +36,7 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
             @Override
             public void windowClosed(WindowEvent e) {
                 super.windowClosed(e); //To change body of generated methods, choose Tools | Templates.
-              //  onDefaultClose();
+                //  onDefaultClose();
             }
         });
     }
@@ -67,10 +67,11 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
         meanOffsetValueComboBox = new javax.swing.JComboBox();
         percentDishonestRALabel = new javax.swing.JLabel();
         percentDishonestRASpinner = new javax.swing.JSpinner();
-        closeInputDialogButton = new javax.swing.JButton();
+        generateSceneInputDialogButton = new javax.swing.JButton();
         selectAttackLabel = new javax.swing.JLabel();
         selectAttackComboBox = new javax.swing.JComboBox();
         keepStaticRecommendationsCheckBox = new javax.swing.JCheckBox();
+        closeInputDialogButton = new javax.swing.JButton();
 
         radioButtonGroup.add(meanOffsetScenarioRadioButton);
         radioButtonGroup.add(attackScenarioRadioButton);
@@ -81,7 +82,7 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
         setFocusableWindowState(false);
         getContentPane().setLayout(null);
 
-        ConfigureInputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Configure", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 102, 255)));
+        ConfigureInputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Configure", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(102, 102, 255))); // NOI18N
         ConfigureInputPanel.setLayout(null);
 
         memebrNodesLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -143,14 +144,14 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
         ConfigureInputPanel.add(percentDishonestRASpinner);
         percentDishonestRASpinner.setBounds(330, 220, 60, 20);
 
-        closeInputDialogButton.setText("Close");
-        closeInputDialogButton.addActionListener(new java.awt.event.ActionListener() {
+        generateSceneInputDialogButton.setText("Generate Scene");
+        generateSceneInputDialogButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeInputDialogButtonActionPerformed(evt);
+                generateSceneInputDialogButtonActionPerformed(evt);
             }
         });
-        ConfigureInputPanel.add(closeInputDialogButton);
-        closeInputDialogButton.setBounds(170, 390, 140, 23);
+        ConfigureInputPanel.add(generateSceneInputDialogButton);
+        generateSceneInputDialogButton.setBounds(80, 370, 140, 23);
 
         selectAttackLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         selectAttackLabel.setText("Select Attack Type :");
@@ -171,6 +172,15 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
         ConfigureInputPanel.add(keepStaticRecommendationsCheckBox);
         keepStaticRecommendationsCheckBox.setBounds(140, 330, 240, 23);
 
+        closeInputDialogButton.setText("Close");
+        closeInputDialogButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeInputDialogButtonActionPerformed(evt);
+            }
+        });
+        ConfigureInputPanel.add(closeInputDialogButton);
+        closeInputDialogButton.setBounds(230, 370, 150, 23);
+
         getContentPane().add(ConfigureInputPanel);
         ConfigureInputPanel.setBounds(0, 0, 470, 440);
 
@@ -182,16 +192,22 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_evaluatePerformanceCheckBoxActionPerformed
 
-    private void closeInputDialogButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeInputDialogButtonActionPerformed
+    private void generateSceneInputDialogButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateSceneInputDialogButtonActionPerformed
         // TODO add your handling code here:
         controlsToobar.generateScenarioActionPerformed();
         setFocusableWindowState(false);
         dispose();
-    }//GEN-LAST:event_closeInputDialogButtonActionPerformed
+    }//GEN-LAST:event_generateSceneInputDialogButtonActionPerformed
 
     private void keepStaticRecommendationsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keepStaticRecommendationsCheckBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_keepStaticRecommendationsCheckBoxActionPerformed
+
+    private void closeInputDialogButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeInputDialogButtonActionPerformed
+        // TODO add your handling code here:
+        setFocusableWindowState(false);
+        dispose();
+    }//GEN-LAST:event_closeInputDialogButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,7 +288,7 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
     }
 
     public JButton getCloseInputDialogButton() {
-        return closeInputDialogButton;
+        return generateSceneInputDialogButton;
     }
 
     public JLabel getEnteringNodesLabel() {
@@ -303,7 +319,6 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
         this.keepStaticRecommendationsCheckBox = keepStaticRecommendationsCheckBox;
     }
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ConfigureInputPanel;
@@ -312,6 +327,7 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
     private javax.swing.JLabel enteringNodesLabel;
     private javax.swing.JCheckBox evaluatePerformanceCheckBox;
     private javax.swing.JSpinner externalNodeCountSpinner;
+    private javax.swing.JButton generateSceneInputDialogButton;
     private javax.swing.JSpinner inputNodesCountSpinner;
     private javax.swing.JCheckBox keepStaticRecommendationsCheckBox;
     private javax.swing.JRadioButton meanOffsetScenarioRadioButton;

@@ -9,9 +9,6 @@ import custom.CustomTableCellRenderer;
 import custom.CustomTableModel;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.TreeSet;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -29,24 +26,25 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
 
     /*Reference Data Set*/
     //Data Set 1
-    private static int recommendations[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-        2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-        3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9};
-
+   /* private static int recommendations[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+     2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+     3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9};*/
     //Data Set 2
     /*private static int recommendations[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};*/
     //Data Set 3
     //private static int recommendations[] = {5, 5, 5, 5, 5, 5,5};
     //Test Data Set
-   /* private static int recommendations[]
-     = { 9, 9, 9, 9, 9,
-     9, 9, 9, 9, 9,
-     9, 9, 9, 9, 9,
-     3, 3, 3, 3, 3,
-     3, 3, 3, 3, 3,
-     3, 3, 3, 3, 3,};*/
+    private static int recommendations[]
+            = {1, 2, 9, 10, 5,
+                5, 5, 5, 5, 5,
+                5, 5, 5, 5, 5,
+                5, 5, 5, 5, 5,
+                5, 5, 5, 5, 5,
+                5, 5, 5, 5, 5,
+                5, 5, 5, 5, 5,
+                5, 5, 5, 5, 5};
     // private static int recommendations[] = {0, 2, 1, 0, 3, 2, 0, 0, 2, 2};
     /**
      * Creates new form TabbedPane
@@ -144,7 +142,7 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
         freqDistPanel.add(freqDistScrollPane, java.awt.BorderLayout.CENTER);
 
         stepOneTab.add(freqDistPanel);
-        freqDistPanel.setBounds(0, 30, 1000, 220);
+        freqDistPanel.setBounds(0, 30, 1000, 230);
 
         tabbedPane.addTab("Step 1", stepOneTab);
 
@@ -535,23 +533,23 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
         }
 
         if (trustedList.size() > nonTrustedList.size()) {
-           // alpha = trustedList.size() + sumArray((String[]) trustedList.toArray()) + 1;
-           // beta = nonTrustedList.size() + sumArray((String[]) nonTrustedList.toArray()) + 1;
+            // alpha = trustedList.size() + sumArray((String[]) trustedList.toArray()) + 1;
+            // beta = nonTrustedList.size() + sumArray((String[]) nonTrustedList.toArray()) + 1;
         } else if (trustedList.size() < nonTrustedList.size()) {
-              alpha = nonTrustedList.size() + sumArray(nonTrustedList.toArray()) + 1;
-              beta = trustedList.size() + sumArray(trustedList.toArray()) + 1;
-              System.out.println("NT ALPHA: "+alpha+" BETA: "+beta);
+            alpha = nonTrustedList.size() + sumArray(nonTrustedList.toArray()) + 1;
+            beta = trustedList.size() + sumArray(trustedList.toArray()) + 1;
+            System.out.println("NT ALPHA: " + alpha + " BETA: " + beta);
         }
 
         trustValue = alpha / (alpha + beta);
-        System.out.println("TESTING TRUST VALUE: "+trustValue);
+        System.out.println("TESTING TRUST VALUE: " + trustValue);
         return trustValue;
     }
 
     private double sumArray(Object[] strArray) {
         double sum = 0.0;
         for (Object value : strArray) {
-            sum += (Double)value;
+            sum += (Double) value;
         }
         return sum;
     }

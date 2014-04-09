@@ -119,6 +119,10 @@ public class ControlsToobar implements IConfiguration {
                 if (evaluatePerformanceCheckBox.isSelected()) {
                     setPerformanceEvaluationControls(true);
 
+                    if (attackScenarioRadioButton.isSelected()) {
+                        keepStaticRecommendationsCheckBox.setEnabled(true);
+                    }
+
                     if (meanOffsetScenarioRadioButton.isSelected()) {
                         setMeanOffsetControls(true);
                     } else {

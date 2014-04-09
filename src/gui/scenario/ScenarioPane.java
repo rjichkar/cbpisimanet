@@ -866,6 +866,7 @@ public class ScenarioPane extends JPanel implements IConfiguration {
                             }
                         } else {
                             //Genrate Random Rccs for RO Attack
+                            System.out.println("HONEST RA");
                             rcValue = (int) (Math.random() * 11);
                             while (rcValue == 0) {
                                 rcValue = (int) (Math.random() * 11);
@@ -961,6 +962,7 @@ public class ScenarioPane extends JPanel implements IConfiguration {
                             }
                         } else {
                             //Genrate Dishonest Rccs based on T.V for RO Attack
+                            System.out.println("DISHONEST RA");
                             if (attackTrustValue <= 0.5) {
                                 while (rcValue < 8) {
                                     rcValue = (int) (Math.random() * 11);
