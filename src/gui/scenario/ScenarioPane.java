@@ -37,6 +37,7 @@ public class ScenarioPane extends JPanel implements IConfiguration {
     private JLabel energyStatuLabel;
     private JLabel headingLabel;
     private int recommendations[][];
+    private int recommendationsTempCopy[][];
     private int dishonestRc[][];
     private ArrayList<String> nodesConfList;
     private ArrayList<String> externalNodesConfList;
@@ -65,6 +66,7 @@ public class ScenarioPane extends JPanel implements IConfiguration {
     private boolean stopEnergyMeter = true;
 
     //TS 4.0
+    private boolean backupRccs = true;
     private boolean stopInteractionsFlag = true;
     private int serviceProviderIndex;
     private int timeSapnToShowRequestLinks;
@@ -767,6 +769,7 @@ public class ScenarioPane extends JPanel implements IConfiguration {
 
     public int[][] generateRecommendationsForPE(int inputNodeCount, int externalNodeCount, int attackType, int percentDishonestRA, boolean moMode, double inputMO) {
         recommendations = new int[SERVICE_PROVIDERS_COUNT/*externalNodeCount*/][inputNodeCount];
+        recommendationsTempCopy = new int[SERVICE_PROVIDERS_COUNT/*externalNodeCount*/][inputNodeCount];
 
         Random random = new Random();
 
@@ -786,6 +789,13 @@ public class ScenarioPane extends JPanel implements IConfiguration {
             double sumHonestRA = 0;
             attackTrustValue = 0;
 
+            //Data Set Initialization for RO Attack
+            int[] roAttackHonestRccSet = {4, 5, 6, 7};
+            int[] roAttackDishonestRccSet = {1, 9, 2, 10};
+            int roAttackHonestRccIndex = 0;
+            int roAttackDishonestRccIndex = 0;
+
+            System.out.println("INPUT NODE COUNT:" + inputNodeCount);
             //Add Honest Rcc
             for (int j = 0; j < inputNodeCount; j++) {
                 int rcValue = 0;
@@ -838,7 +848,7 @@ public class ScenarioPane extends JPanel implements IConfiguration {
                                     break;
                             }
                         } else {
-                            //For BS Attack (Generate Rcc < 5)
+                            //For BS Attack (Generate Rcc <= 3)
                             rcValue = 4;
                             while (rcValue > 3 || rcValue == 0) {
                                 rcValue = (int) (Math.random() * 11);
@@ -866,15 +876,23 @@ public class ScenarioPane extends JPanel implements IConfiguration {
                             }
                         } else {
                             //Genrate Random Rccs for RO Attack
-                            System.out.println("HONEST RA");
-                            rcValue = (int) (Math.random() * 11);
-                            while (rcValue == 0) {
-                                rcValue = (int) (Math.random() * 11);
-                            }
+                            System.out.println("RO HONEST RA");
+                            //Add manipulated honest Rccs
+                            rcValue = roAttackHonestRccSet[roAttackHonestRccIndex];
+                            roAttackHonestRccIndex = (roAttackHonestRccIndex + 1) % roAttackHonestRccSet.length;
+
+                            //Add Honest Rccs
+                             /*
+                             rcValue = (int) (Math.random() * 11);
+                             while (rcValue == 0) {
+                             rcValue = (int) (Math.random() * 11);
+                             }
+                             */
                         }
                         break;
                 }
                 recommendations[i][j] = rcValue;
+                recommendationsTempCopy[i][j] = rcValue;
             }
 
             System.out.println("DISHONEST RA COUNT:" + dishonestRACount + " RCC[i] LEN:" + recommendations[i].length);
@@ -896,7 +914,6 @@ public class ScenarioPane extends JPanel implements IConfiguration {
                                     rcValue = 5;
                                     break;
                                 case "0.2":
-                                    // System.out.println("MO LEVEL HON:" + inputMO);
                                     rcValue = 4;
                                     break;
                                 case "0.4":
@@ -922,7 +939,6 @@ public class ScenarioPane extends JPanel implements IConfiguration {
                                     rcValue = 6;
                                     break;
                                 case "0.2":
-                                    // System.out.println("MO LEVEL DIS:" + inputMO);
                                     rcValue = 6;
                                     break;
                                 case "0.4":
@@ -961,23 +977,36 @@ public class ScenarioPane extends JPanel implements IConfiguration {
                                     break;
                             }
                         } else {
-                            //Genrate Dishonest Rccs based on T.V for RO Attack
-                            System.out.println("DISHONEST RA");
-                            if (attackTrustValue <= 0.5) {
-                                while (rcValue < 8) {
-                                    rcValue = (int) (Math.random() * 11);
-                                }
-                            } else {
-                                while (rcValue == 0) {
-                                    rcValue = (int) (Math.random() * 4);
-                                }
-                            }
+                            System.out.println("RO DISHONEST RA");
+                            //Logic for adding Dishonest RA for RO V1
+                            /*
+                             if (attackTrustValue <= 0.5) {
+                             while (rcValue < 8) {
+                             rcValue = (int) (Math.random() * 11);
+                             }
+                             } else {
+                             while (rcValue == 0) {
+                             rcValue = (int) (Math.random() * 4);
+                             }
+                             }
+                             */
+
+                            //Logic for adding Dishonest RA for RO V2
+                            rcValue = roAttackDishonestRccSet[roAttackDishonestRccIndex];
+                            roAttackDishonestRccIndex = (roAttackDishonestRccIndex + 1) % roAttackDishonestRccSet.length;
                         }
                         break;
                 }
                 recommendations[i][j] = rcValue;
                 dishonestRc[i][j] = rcValue;
             }
+
+            //Print Final Data Set
+            System.out.print("DATA SET::");
+            for (int j : recommendations[i]) {
+                System.out.print(j + ",");
+            }
+            System.out.println("");
 
             if (moMode) {
                 for (int j = 0; j < dishonestRACount; j++) {
@@ -993,7 +1022,8 @@ public class ScenarioPane extends JPanel implements IConfiguration {
                     sum += (rcc / 10.0);
                 }
                 System.out.println("SUM RCCS:" + sum);
-                double trustRecommendedWOD =  sum / recommendations[i].length;/*dishonestRc[0][0]/10.0;*/
+                double trustRecommendedWOD = sum / recommendations[i].length;/*dishonestRc[0][0]/10.0;*/
+
                 mOGraphParameters.setRecommendedTrustWOD(trustRecommendedWOD);
 
                 System.out.println("SUM Honest RA:" + sumHonestRA + " SUM Dishonest RA:" + sumDishonestRA);
@@ -1011,14 +1041,29 @@ public class ScenarioPane extends JPanel implements IConfiguration {
     }
 
     public void generateStaticRecommendations(int percentDishonestRA) {
+        //Copy unaltered recommendations 
+        for (int i = 0; i < SERVICE_PROVIDERS_COUNT; i++) {
+           // System.out.print("RCC COPY FOR CH-" + (i + 1) + ":");
+            for (int j = 0; j < recommendationsTempCopy[i].length; j++) {
+               // System.out.print(recommendationsTempCopy[i][j] + ",");
+                recommendations[i][j]=recommendationsTempCopy[i][j];
+            }
+           // System.out.println("");
+        }
+        //Add previous dishonest reccommendations
         setDishonestRACount((int) (inputNodeCount * (percentDishonestRA / 100.0)));
-        System.out.println("DISHONEST RA LENGTH::" + dishonestRc[0].length);
+        System.out.println("DISHONEST RA LENGTH::" + dishonestRc[0].length + " INPUT NODE COUNT::" + getDishonestRACount());
         for (int i = 0; i < SERVICE_PROVIDERS_COUNT; i++) {
             int index = 0;
-            System.out.print("DISHONEST RA RCC:");
             for (int j = 0; j < getDishonestRACount(); j++) {
                 recommendations[i][j] = dishonestRc[i][index];
                 index = (index + 1) % dishonestRc[i].length;
+            }
+        }
+        //Display Updated Rcc
+        for (int i = 0; i < SERVICE_PROVIDERS_COUNT; i++) {
+            System.out.print("DISHONEST RA RCC FOR CH-" + (i + 1) + ":");
+            for (int j = 0; j < recommendations[i].length; j++) {
                 System.out.print(recommendations[i][j] + ",");
             }
             System.out.println("");
@@ -1155,6 +1200,10 @@ public class ScenarioPane extends JPanel implements IConfiguration {
 
     public int[] getRecommendationsForNode(int node) {
         return recommendations[node];
+    }
+
+    public void setRecommendationsForNode(int[] recommendations, int node) {
+        this.recommendations[node] = recommendations;
     }
 
     public void setTotalEnergyCounter(double totalEnergyCounter) {
