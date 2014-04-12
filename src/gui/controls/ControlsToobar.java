@@ -196,6 +196,10 @@ public class ControlsToobar implements IConfiguration {
                         System.out.println("PARAMS:" + iterator.next());
                     }
                 }
+                System.out.println("RCC BEFORE ANALYSIS DISPLAY:");
+                for(int i:scenarioPane.getRecommendationsForNode(selectDetectedNodeComboBox.getSelectedIndex())){
+                    System.out.print(i+",");
+                }
                 new RecommendationAnalyzer_v2(scenarioPane.getRecommendationsForNode(selectDetectedNodeComboBox.getSelectedIndex()), paramSet, moMode, frameTitle, graphHeading).setVisible(true);
             }
         });

@@ -35,16 +35,32 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};*/
     //Data Set 3
     //private static int recommendations[] = {5, 5, 5, 5, 5, 5,5};
-    //Test Data Set
+    //Test Data Set 1 for RO Attack 
+   /* private static int recommendations[]
+     = {1, 2, 9, 3, 4,
+     7, 3, 4, 7, 3,
+     4, 7, 3, 4, 7,
+     3, 4, 7, 3, 4,
+     7, 3, 4, 7, 3,
+     4, 7, 3, 4, 7,};*/
+    //Test Data Set 2 for RO Attack 
+    /*private static int recommendations[]
+     = { 1, 2, 9, 10, 4,
+     5, 6, 7, 4, 5,
+     6, 7, 4, 5, 6,
+     7, 4, 5, 6, 7,
+     4, 5, 6, 7, 4,
+     5, 6, 7, 4, 5,
+     6, 7, 4, 5, 6,
+     7, 4, 5, 6, 7};*/
+    //Test Data Set for BS Attack
     private static int recommendations[]
-            = {1, 2, 9, 10, 5,
-                5, 5, 5, 5, 5,
-                5, 5, 5, 5, 5,
-                5, 5, 5, 5, 5,
-                5, 5, 5, 5, 5,
-                5, 5, 5, 5, 5,
-                5, 5, 5, 5, 5,
-                5, 5, 5, 5, 5};
+            = {9, 8, 10, 1, 2,
+                3, 1, 2, 3, 1,
+                2, 3, 2, 3, 1,
+                2, 3, 1, 2, 3,
+                1, 2, 3, 1, 2,
+                3, 1, 2, 3, 1};
     // private static int recommendations[] = {0, 2, 1, 0, 3, 2, 0, 0, 2, 2};
     /**
      * Creates new form TabbedPane
@@ -457,10 +473,12 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
 
             //double trustValue = computeTrustValueMethod2(srDomainClasses, rDomainFilteredClasses);
             String trustDecision = "";
-            if (trustValue >= 0.5) {
-                trustDecision = "TRUSTED";
-            } else {
-                trustDecision = "NOT TRUSTED";
+            if (trustValue >= 0.8) {
+                trustDecision = "HIGH";
+            } else if (trustValue >= 0.4 && trustValue <= 0.7) {
+                trustDecision = "MEDIUM";
+            } else if (trustValue >= 0.1 && trustValue <= 0.3) {
+                trustDecision = "LOW";
             }
             //Plotting graph for Smoothing Factor
             sfGraphPaneTab.setHistogramParams(smoothingFactorList, highestSFIndex, graphHeading);
@@ -478,7 +496,7 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
                 {"Dishonest Recommendation Classes", dishonestReccomendationClasses},
                 {"Final Trust Value", trustValue},
                 {"Rcc Frequency", freqList.get(freqHighestIndex)},
-                {"Trust Decision", trustDecision}
+                {"Trust Level", trustDecision}
             };
             //Set Table model for Result Table
             CustomTableModel customTableModel = new CustomTableModel(columnNamesResultTable, data);

@@ -15,11 +15,14 @@ public class CustomTableCellRenderer extends DefaultTableCellRenderer {
 
         if (value instanceof String) {
             String msg = (String) value;
-            if (msg.equalsIgnoreCase("trusted")) {
+            if (msg.equalsIgnoreCase("high")) {
                 // You can also customize the Font and Foreground this way
                 cell.setFont(new Font("Serif", Font.BOLD, 12));
-                cell.setForeground(new Color(0,128,0));
-            } else if (msg.equalsIgnoreCase("not trusted")) {
+                cell.setForeground(new Color(0, 128, 0));
+            } else if (msg.equalsIgnoreCase("medium")) {
+                cell.setFont(new Font("Serif", Font.BOLD, 12));
+                cell.setForeground(Color.ORANGE);
+            } else if (msg.equalsIgnoreCase("low")) {
                 cell.setFont(new Font("Serif", Font.BOLD, 12));
                 cell.setForeground(Color.red);
             } else {
