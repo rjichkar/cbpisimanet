@@ -52,6 +52,7 @@ public class ControlsToobar implements IConfiguration {
     private JCheckBox keepStaticRecommendationsCheckBox;
     private JRadioButton meanOffsetScenarioRadioButton;
     private JRadioButton attackScenarioRadioButton;
+    private JRadioButton attackScenarioIdealRadioButton;
     private JComboBox meanOffsetValueComboBox;
     private JComboBox selectAttackComboBox;
     private JComboBox selectDetectedNodeComboBox;
@@ -91,6 +92,7 @@ public class ControlsToobar implements IConfiguration {
         evaluatePerformanceCheckBox = configureInputDialog.getEvaluatePerformanceCheckBox();
         meanOffsetScenarioRadioButton = configureInputDialog.getMeanOffsetScenarioRadioButton();
         attackScenarioRadioButton = configureInputDialog.getAttackScenarioRadioButton();
+        attackScenarioIdealRadioButton=configureInputDialog.getAttackScenarioIdealRadioButton();
         meanOffsetValueComboBox = configureInputDialog.getMeanOffsetValueComboBox();
         selectAttackComboBox = configureInputDialog.getSelectAttackComboBox();
         keepStaticRecommendationsCheckBox = configureInputDialog.getKeepStaticRecommendationsCheckBox();
@@ -165,6 +167,15 @@ public class ControlsToobar implements IConfiguration {
                 keepStaticRecommendationsCheckBox.setEnabled(true);
             }
         });
+        
+         //Attack Scenario Ideal Radio Button
+        attackScenarioIdealRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setMeanOffsetControls(false);
+                keepStaticRecommendationsCheckBox.setEnabled(false);
+            }
+        });
 
         //Show Algorithm Analysis Radio Button
         showAlgorithmAnalysisButton.addActionListener(new ActionListener() {
@@ -196,10 +207,12 @@ public class ControlsToobar implements IConfiguration {
                         System.out.println("PARAMS:" + iterator.next());
                     }
                 }
+                /*
                 System.out.println("RCC BEFORE ANALYSIS DISPLAY:");
                 for(int i:scenarioPane.getRecommendationsForNode(selectDetectedNodeComboBox.getSelectedIndex())){
                     System.out.print(i+",");
                 }
+                */
                 new RecommendationAnalyzer_v2(scenarioPane.getRecommendationsForNode(selectDetectedNodeComboBox.getSelectedIndex()), paramSet, moMode, frameTitle, graphHeading).setVisible(true);
             }
         });
@@ -291,6 +304,7 @@ public class ControlsToobar implements IConfiguration {
     private void setPerformanceEvaluationControls(boolean flag) {
         meanOffsetScenarioRadioButton.setEnabled(flag);
         attackScenarioRadioButton.setEnabled(flag);
+        attackScenarioIdealRadioButton.setEnabled(flag);
         configureInputDialog.getMeanOffsetValueLabel().setEnabled(flag);
         meanOffsetValueComboBox.setEnabled(flag);
         configureInputDialog.getPercentDishonestRALabel().setEnabled(flag);
@@ -454,6 +468,14 @@ public class ControlsToobar implements IConfiguration {
 
     public JRadioButton getAttackScenarioRadioButton() {
         return attackScenarioRadioButton;
+    }
+
+    public JRadioButton getAttackScenarioIdealRadioButton() {
+        return attackScenarioIdealRadioButton;
+    }
+
+    public void setAttackScenarioIdealRadioButton(JRadioButton attackScenarioIdealRadioButton) {
+        this.attackScenarioIdealRadioButton = attackScenarioIdealRadioButton;
     }
 
     public JComboBox getMeanOffsetValueComboBox() {

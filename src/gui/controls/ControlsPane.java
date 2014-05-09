@@ -6,7 +6,6 @@
 package gui.controls;
 
 import engine.MobileNode;
-import engine.RecommendationAnalyzer_v2;
 import gui.graphs.GraphsFrame;
 
 import gui.scenario.ScenarioPane;

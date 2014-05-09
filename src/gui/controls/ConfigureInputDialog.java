@@ -63,6 +63,7 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
         evaluatePerformanceCheckBox = new javax.swing.JCheckBox();
         meanOffsetScenarioRadioButton = new javax.swing.JRadioButton();
         attackScenarioRadioButton = new javax.swing.JRadioButton();
+        attackScenarioIdealRadioButton = new javax.swing.JRadioButton();
         meanOffsetValueLabel = new javax.swing.JLabel();
         meanOffsetValueComboBox = new javax.swing.JComboBox();
         percentDishonestRALabel = new javax.swing.JLabel();
@@ -75,6 +76,7 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
 
         radioButtonGroup.add(meanOffsetScenarioRadioButton);
         radioButtonGroup.add(attackScenarioRadioButton);
+        radioButtonGroup.add(attackScenarioIdealRadioButton);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Configure Input");
@@ -121,28 +123,38 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
         meanOffsetScenarioRadioButton.setBounds(20, 120, 190, 23);
 
         attackScenarioRadioButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        attackScenarioRadioButton.setText("Attack Scenario");
+        attackScenarioRadioButton.setText("Attack Scenario (Normal Mode)");
         ConfigureInputPanel.add(attackScenarioRadioButton);
-        attackScenarioRadioButton.setBounds(20, 150, 150, 20);
+        attackScenarioRadioButton.setBounds(20, 150, 240, 20);
+
+        attackScenarioIdealRadioButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        attackScenarioIdealRadioButton.setText("Attack Scenario (Ideal Mode for BM & BS Attack)");
+        attackScenarioIdealRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                attackScenarioIdealRadioButtonActionPerformed(evt);
+            }
+        });
+        ConfigureInputPanel.add(attackScenarioIdealRadioButton);
+        attackScenarioIdealRadioButton.setBounds(20, 180, 330, 23);
 
         meanOffsetValueLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         meanOffsetValueLabel.setText("Mean Offset Value: ");
         ConfigureInputPanel.add(meanOffsetValueLabel);
-        meanOffsetValueLabel.setBounds(20, 220, 120, 20);
+        meanOffsetValueLabel.setBounds(20, 230, 120, 20);
 
         meanOffsetValueComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0.1", "0.2", "0.4", "0.6", "0.8" }));
         ConfigureInputPanel.add(meanOffsetValueComboBox);
-        meanOffsetValueComboBox.setBounds(140, 220, 70, 20);
+        meanOffsetValueComboBox.setBounds(140, 230, 70, 20);
 
         percentDishonestRALabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         percentDishonestRALabel.setText("% Dishonest RA:");
         ConfigureInputPanel.add(percentDishonestRALabel);
-        percentDishonestRALabel.setBounds(220, 220, 120, 20);
+        percentDishonestRALabel.setBounds(220, 230, 120, 20);
 
         percentDishonestRASpinner.setModel(new SpinnerNumberModel(10,10,100,5));
         percentDishonestRASpinner.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ConfigureInputPanel.add(percentDishonestRASpinner);
-        percentDishonestRASpinner.setBounds(330, 220, 60, 20);
+        percentDishonestRASpinner.setBounds(330, 230, 60, 20);
 
         generateSceneInputDialogButton.setText("Generate Scene");
         generateSceneInputDialogButton.addActionListener(new java.awt.event.ActionListener() {
@@ -151,16 +163,16 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
             }
         });
         ConfigureInputPanel.add(generateSceneInputDialogButton);
-        generateSceneInputDialogButton.setBounds(80, 370, 140, 23);
+        generateSceneInputDialogButton.setBounds(80, 380, 140, 23);
 
         selectAttackLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         selectAttackLabel.setText("Select Attack Type :");
         ConfigureInputPanel.add(selectAttackLabel);
-        selectAttackLabel.setBounds(20, 270, 130, 14);
+        selectAttackLabel.setBounds(20, 280, 130, 14);
 
         selectAttackComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Bad Mouthing", "Ballot Stuffing", "Random Opinion" }));
         ConfigureInputPanel.add(selectAttackComboBox);
-        selectAttackComboBox.setBounds(140, 270, 190, 20);
+        selectAttackComboBox.setBounds(140, 280, 190, 20);
 
         keepStaticRecommendationsCheckBox.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         keepStaticRecommendationsCheckBox.setText("Keep Recommendations Static ");
@@ -170,7 +182,7 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
             }
         });
         ConfigureInputPanel.add(keepStaticRecommendationsCheckBox);
-        keepStaticRecommendationsCheckBox.setBounds(140, 330, 240, 23);
+        keepStaticRecommendationsCheckBox.setBounds(140, 340, 240, 23);
 
         closeInputDialogButton.setText("Close");
         closeInputDialogButton.addActionListener(new java.awt.event.ActionListener() {
@@ -179,7 +191,7 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
             }
         });
         ConfigureInputPanel.add(closeInputDialogButton);
-        closeInputDialogButton.setBounds(230, 370, 150, 23);
+        closeInputDialogButton.setBounds(230, 380, 150, 23);
 
         getContentPane().add(ConfigureInputPanel);
         ConfigureInputPanel.setBounds(0, 0, 470, 440);
@@ -208,6 +220,10 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
         setFocusableWindowState(false);
         dispose();
     }//GEN-LAST:event_closeInputDialogButtonActionPerformed
+
+    private void attackScenarioIdealRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attackScenarioIdealRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_attackScenarioIdealRadioButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -319,9 +335,18 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
         this.keepStaticRecommendationsCheckBox = keepStaticRecommendationsCheckBox;
     }
 
+    public JRadioButton getAttackScenarioIdealRadioButton() {
+        return attackScenarioIdealRadioButton;
+    }
+
+    public void setAttackScenarioIdealRadioButton(JRadioButton attackScenarioIdealRadioButton) {
+        this.attackScenarioIdealRadioButton = attackScenarioIdealRadioButton;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ConfigureInputPanel;
+    private javax.swing.JRadioButton attackScenarioIdealRadioButton;
     private javax.swing.JRadioButton attackScenarioRadioButton;
     private javax.swing.JButton closeInputDialogButton;
     private javax.swing.JLabel enteringNodesLabel;

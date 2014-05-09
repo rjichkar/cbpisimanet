@@ -55,9 +55,9 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
      7, 4, 5, 6, 7};*/
     //Test Data Set for BS Attack
     private static int recommendations[]
-            = {9, 8, 10, 1, 2,
-                3, 1, 2, 3, 1,
-                2, 3, 2, 3, 1,
+            = {9, 8, 10, 9, 8,
+                10, 9, 8, 10, 9,
+                8, 10, 2, 3, 1,
                 2, 3, 1, 2, 3,
                 1, 2, 3, 1, 2,
                 3, 1, 2, 3, 1};

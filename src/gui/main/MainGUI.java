@@ -27,12 +27,15 @@ public class MainGUI extends javax.swing.JFrame {
     private ControlsPane controlsPane;
     private ControlsToobar controlsToobar;
 
+
     /**
      * Creates new form MainWindow
      */
     public MainGUI() {
         initComponents();
-
+        //Show Splash Screen
+         new SplashScreenNew(null, true).setVisible(true);
+         
         //Initialize Scenario Panel
         scenarioPane = new ScenarioPane();
         scenarioPane.setBounds(0, 50, 1290, 900);

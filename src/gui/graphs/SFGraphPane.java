@@ -8,7 +8,6 @@ package gui.graphs;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Panel;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

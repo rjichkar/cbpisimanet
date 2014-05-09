@@ -794,6 +794,10 @@ public class ScenarioPane extends JPanel implements IConfiguration {
             int[] roAttackDishonestRccSet = {1, 9, 2, 10};
             int roAttackHonestRccIndex = 0;
             int roAttackDishonestRccIndex = 0;
+            int rcValueSeedLow = 1;
+            int rcValueSeedHigh = 8;
+            
+            boolean isIdealAttack=controlsToobar.getAttackScenarioIdealRadioButton().isSelected();
 
             System.out.println("INPUT NODE COUNT:" + inputNodeCount);
             //Add Honest Rcc
@@ -821,8 +825,15 @@ public class ScenarioPane extends JPanel implements IConfiguration {
                             }
                         } else {
                             //For BM Attack (Generate Rcc >5)
-                            while (rcValue < 8) {
-                                rcValue = (int) (Math.random() * 11);
+                            if (isIdealAttack) {
+                                //For Ideal BM Attack
+                                rcValue = rcValueSeedHigh;
+                                rcValueSeedHigh = (((rcValueSeedHigh + 1) % 11) == 0) ? 8 : (rcValueSeedHigh + 1) % 11;
+                               // System.out.println("RCVALUE HIGH BM:" + rcValue);
+                            } else {
+                                while (rcValue < 8) {
+                                    rcValue = (int) (Math.random() * 11);
+                                }
                             }
                         }
                         break;
@@ -849,9 +860,16 @@ public class ScenarioPane extends JPanel implements IConfiguration {
                             }
                         } else {
                             //For BS Attack (Generate Rcc <= 3)
-                            rcValue = 4;
-                            while (rcValue > 3 || rcValue == 0) {
-                                rcValue = (int) (Math.random() * 11);
+                            if (isIdealAttack) {
+                                //For Ideal BS Attack
+                                rcValue = rcValueSeedLow;
+                                rcValueSeedLow = (((rcValueSeedLow + 1) % 4) == 0) ? 1 : (rcValueSeedLow + 1) % 4;
+                                // System.out.println("RCVALUE LOW BS:" + rcValue);
+                            } else {
+                                rcValue = 4;
+                                while (rcValue > 3 || rcValue == 0) {
+                                    rcValue = (int) (Math.random() * 11);
+                                }
                             }
                         }
                         break;
@@ -927,8 +945,15 @@ public class ScenarioPane extends JPanel implements IConfiguration {
                                     break;
                             }
                         } else {
-                            while (rcValue == 0) {
-                                rcValue = (int) (Math.random() * 4);
+                            if (isIdealAttack) {
+                                //For Ideal BM Attack
+                                rcValue = rcValueSeedLow;
+                                rcValueSeedLow = (((rcValueSeedLow + 1) % 4) == 0) ? 1 : (rcValueSeedLow + 1) % 4;
+                                // System.out.println("RCVALUE LOW BM:" + rcValue);
+                            } else {
+                                while (rcValue == 0) {
+                                    rcValue = (int) (Math.random() * 4);
+                                }
                             }
                         }
                         break;
@@ -952,8 +977,15 @@ public class ScenarioPane extends JPanel implements IConfiguration {
                                     break;
                             }
                         } else {
-                            while (rcValue < 8) {
-                                rcValue = (int) (Math.random() * 11);
+                            if (isIdealAttack) {
+                                //For Ideal BS Attack
+                                rcValue = rcValueSeedHigh;
+                                rcValueSeedHigh = (((rcValueSeedHigh + 1) % 11) == 0) ? 8 : (rcValueSeedHigh + 1) % 11;
+                                //System.out.println("RCVALUE HIGH BS:" + rcValue);
+                            } else {
+                                while (rcValue < 8) {
+                                    rcValue = (int) (Math.random() * 11);
+                                }
                             }
                         }
                         break;
@@ -1043,12 +1075,12 @@ public class ScenarioPane extends JPanel implements IConfiguration {
     public void generateStaticRecommendations(int percentDishonestRA) {
         //Copy unaltered recommendations 
         for (int i = 0; i < SERVICE_PROVIDERS_COUNT; i++) {
-           // System.out.print("RCC COPY FOR CH-" + (i + 1) + ":");
+            // System.out.print("RCC COPY FOR CH-" + (i + 1) + ":");
             for (int j = 0; j < recommendationsTempCopy[i].length; j++) {
-               // System.out.print(recommendationsTempCopy[i][j] + ",");
-                recommendations[i][j]=recommendationsTempCopy[i][j];
+                // System.out.print(recommendationsTempCopy[i][j] + ",");
+                recommendations[i][j] = recommendationsTempCopy[i][j];
             }
-           // System.out.println("");
+            // System.out.println("");
         }
         //Add previous dishonest reccommendations
         setDishonestRACount((int) (inputNodeCount * (percentDishonestRA / 100.0)));
