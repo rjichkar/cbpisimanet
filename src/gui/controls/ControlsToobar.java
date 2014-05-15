@@ -79,8 +79,8 @@ public class ControlsToobar implements IConfiguration {
         paramSet = new TreeSet<>();
 
         //Load Images
-        playIcon = new ImageIcon(getClass().getResource("../../images/play.jpg"));
-        pauseIcon = new ImageIcon(getClass().getResource("../../images/pause.jpg"));
+        playIcon = new ImageIcon(getClass().getResource("/images/play.jpg"));
+        pauseIcon = new ImageIcon(getClass().getResource("/images/pause.jpg"));
 
         configureInputDialog = new ConfigureInputDialog(null, true, this);
         chooseAnalysisDialog = new ChooseAnalysisDialog(null, true);

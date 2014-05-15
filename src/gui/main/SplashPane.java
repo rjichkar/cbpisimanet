@@ -36,7 +36,7 @@ public class SplashPane extends JPanel {
         setLayout(null);
         setSize(500, 288);
 
-        splashBackgroundIcon = new ImageIcon(getClass().getResource("../../images/splash.jpg"));
+        splashBackgroundIcon = new ImageIcon(getClass().getResource("/images/splash.jpg"));
         progressBar = new JProgressBar();
         progressBar.setForeground(new java.awt.Color(255, 51, 51));
         progressBar.setBounds(0, 240, 540, 5);

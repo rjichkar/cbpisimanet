@@ -34,7 +34,7 @@ public class MainGUI extends javax.swing.JFrame {
     public MainGUI() {
         initComponents();
         //Show Splash Screen
-         new SplashScreenNew(null, true).setVisible(true);
+        new SplashScreenNew(null, true).setVisible(true);
          
         //Initialize Scenario Panel
         scenarioPane = new ScenarioPane();
