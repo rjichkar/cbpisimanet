@@ -45,12 +45,12 @@ public class MobileNode implements IConfiguration {
     }
 
     private void loadImages() {
-        memberNodeIcon = new ImageIcon(getClass().getResource("../images/laptop_medium.png"));
-        externalNodeIcon = new ImageIcon(getClass().getResource("../images/samrtphone_medium.png"));
-        serviceProviderIcon = new ImageIcon(getClass().getResource("../images/wifi_icon_medium.png"));
-        serviceProviderTrustedIcon = new ImageIcon(getClass().getResource("../images/wifi_green_medium.jpg"));
-        serviceProviderNonTrustedIcon = new ImageIcon(getClass().getResource("../images/wifi_red_medium.png"));
-        dishonestMemberNodeIcon = new ImageIcon(getClass().getResource("../images/dishonest_node_small.png"));
+        memberNodeIcon = new ImageIcon(getClass().getResource("/images/laptop_medium.png"));
+        externalNodeIcon = new ImageIcon(getClass().getResource("/images/samrtphone_medium.png"));
+        serviceProviderIcon = new ImageIcon(getClass().getResource("/images/wifi_icon_medium.png"));
+        serviceProviderTrustedIcon = new ImageIcon(getClass().getResource("/images/wifi_green_medium.jpg"));
+        serviceProviderNonTrustedIcon = new ImageIcon(getClass().getResource("/images/wifi_red_medium.png"));
+        dishonestMemberNodeIcon = new ImageIcon(getClass().getResource("/images/dishonest_node_small.png"));
     }
 
     public void startSupportingTimer() {

@@ -6,7 +6,6 @@
 package gui.main;
 
 import gui.scenario.ScenarioPane;
-import gui.controls.ControlsPane;
 import gui.controls.ControlsToobar;
 import gui.logger.EventLoggerFrame;
 import gui.logger.EventLoggerPane;
@@ -24,7 +23,6 @@ import javax.swing.JToolBar;
 public class MainGUI extends javax.swing.JFrame {
 
     private ScenarioPane scenarioPane;
-    private ControlsPane controlsPane;
     private ControlsToobar controlsToobar;
 
 
@@ -41,13 +39,6 @@ public class MainGUI extends javax.swing.JFrame {
         scenarioPane.setBounds(0, 50, 1290, 900);
         scenarioPane.setBorder(BorderFactory.createTitledBorder("Scenario"));
         add(scenarioPane);
-
-        //Initialize Control Panel
-        controlsPane = new ControlsPane(scenarioPane);
-        scenarioPane.setControlsPane(controlsPane);
-        controlsPane.setBounds(850, 50, 440, 900);
-        controlsPane.setBorder(BorderFactory.createTitledBorder("Control Panel"));
-       // add(controlsPane);
 
         //Initialize Control Toolbar
         controlsToobar = new ControlsToobar(scenarioPane, this);

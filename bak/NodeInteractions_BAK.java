@@ -15,7 +15,7 @@ import static apis.IConfiguration.lowPowerNodeColor;
 import static apis.IConfiguration.memberColor;
 import engine.MobileNode;
 import engine.NodeLink;
-import gui.controls.ControlsPane;
+
 import gui.controls.ControlsToobar;
 import gui.logger.EventLoggerPane;
 import java.awt.Color;
@@ -40,7 +40,6 @@ public class NodeInteractions {
     private ArrayList<String> nodesConfList;
     private ArrayList<String> externalNodesConfList;
     private ArrayList<String> serviceProvidersConfList;
-    private ControlsPane controlsPane;
     private ControlsToobar controlsToobar;
     private EventLoggerPane eventLoggerPane;
     private ScenarioPane scenarioPane;

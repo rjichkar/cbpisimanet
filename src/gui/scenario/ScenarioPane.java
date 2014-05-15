@@ -5,7 +5,7 @@
  */
 package gui.scenario;
 
-import gui.controls.ControlsPane;
+
 import apis.IConfiguration;
 import engine.MobileNode;
 import engine.NodeLink;
@@ -44,12 +44,11 @@ public class ScenarioPane extends JPanel implements IConfiguration {
     private ArrayList<String> serviceProvidersConfList;
     private MOGraphParameters mOGraphParameters;
 
-    private ControlsPane controlsPane;
     private ControlsToobar controlsToobar;
     private EventLoggerPane eventLoggerPane;
     private Timer timer;
     private NodeLink link;
-    private NodeInteractions nodeInteractions;
+
     private DecimalFormat dformat;
 
     private int inputNodeCount;
@@ -101,7 +100,6 @@ public class ScenarioPane extends JPanel implements IConfiguration {
 
         dformat = new DecimalFormat("##.###");
         link = new NodeLink();
-        nodeInteractions = new NodeInteractions(this);
         mOGraphParameters = new MOGraphParameters();
 
         eventLoggerPane = new EventLoggerPane(this);
@@ -1110,14 +1108,6 @@ public class ScenarioPane extends JPanel implements IConfiguration {
         this.playPauseControlFlag = playPauseControlFlag;
     }
 
-    public ControlsPane getControlsPane() {
-        return controlsPane;
-    }
-
-    public void setControlsPane(ControlsPane controlsPane) {
-        this.controlsPane = controlsPane;
-    }
-
     public ControlsToobar getControlsToobar() {
         return controlsToobar;
     }
@@ -1352,14 +1342,6 @@ public class ScenarioPane extends JPanel implements IConfiguration {
 
     public void setLink(NodeLink link) {
         this.link = link;
-    }
-
-    public NodeInteractions getNodeInteractions() {
-        return nodeInteractions;
-    }
-
-    public void setNodeInteractions(NodeInteractions nodeInteractions) {
-        this.nodeInteractions = nodeInteractions;
     }
 
     public DecimalFormat getDformat() {
