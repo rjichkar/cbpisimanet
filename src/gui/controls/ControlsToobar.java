@@ -12,9 +12,7 @@ import gui.graphs.MOGraphParameters;
 import gui.main.MainGUI;
 import gui.scenario.ScenarioPane;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.Iterator;
 import java.util.TreeSet;
 import javax.swing.ImageIcon;
@@ -53,6 +51,7 @@ public class ControlsToobar implements IConfiguration {
     private JRadioButton meanOffsetScenarioRadioButton;
     private JRadioButton attackScenarioRadioButton;
     private JRadioButton attackScenarioIdealRadioButton;
+    private JRadioButton trustEvalApp1RadioButton;
     private JComboBox meanOffsetValueComboBox;
     private JComboBox selectAttackComboBox;
     private JComboBox selectDetectedNodeComboBox;
@@ -93,6 +92,7 @@ public class ControlsToobar implements IConfiguration {
         meanOffsetScenarioRadioButton = configureInputDialog.getMeanOffsetScenarioRadioButton();
         attackScenarioRadioButton = configureInputDialog.getAttackScenarioRadioButton();
         attackScenarioIdealRadioButton = configureInputDialog.getAttackScenarioIdealRadioButton();
+        trustEvalApp1RadioButton=configureInputDialog.getTrustEvalApp1RadioButton();
         meanOffsetValueComboBox = configureInputDialog.getMeanOffsetValueComboBox();
         selectAttackComboBox = configureInputDialog.getSelectAttackComboBox();
         keepStaticRecommendationsCheckBox = configureInputDialog.getKeepStaticRecommendationsCheckBox();
@@ -111,29 +111,27 @@ public class ControlsToobar implements IConfiguration {
         setPerformanceEvaluationControls(false);
         setAnalysisControls(false);
         keepStaticRecommendationsCheckBox.setEnabled(false);
+        trustEvalApp1RadioButton.setSelected(true);
     }
 
     private void initEvents() {
         //Evaluate Performance Checkbox Event
-        evaluatePerformanceCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (evaluatePerformanceCheckBox.isSelected()) {
-                    setPerformanceEvaluationControls(true);
-
-                    if (attackScenarioRadioButton.isSelected()) {
-                        keepStaticRecommendationsCheckBox.setEnabled(true);
-                    }
-
-                    if (meanOffsetScenarioRadioButton.isSelected()) {
-                        setMeanOffsetControls(true);
-                    } else {
-                        setMeanOffsetControls(false);
-                    }
-                } else {
-                    setPerformanceEvaluationControls(false);
-                    keepStaticRecommendationsCheckBox.setEnabled(false);
+        evaluatePerformanceCheckBox.addActionListener((ActionEvent e) -> {
+            if (evaluatePerformanceCheckBox.isSelected()) {
+                setPerformanceEvaluationControls(true);
+                
+                if (attackScenarioRadioButton.isSelected()) {
+                    keepStaticRecommendationsCheckBox.setEnabled(true);
                 }
+                
+                if (meanOffsetScenarioRadioButton.isSelected()) {
+                    setMeanOffsetControls(true);
+                } else {
+                    setMeanOffsetControls(false);
+                }
+            } else {
+                setPerformanceEvaluationControls(false);
+                keepStaticRecommendationsCheckBox.setEnabled(false);
             }
         });
 
@@ -143,117 +141,87 @@ public class ControlsToobar implements IConfiguration {
             keepStaticRecommendationsCheckBox.setEnabled(false);
         });
 
-        keepStaticRecommendationsCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (keepStaticRecommendationsCheckBox.isSelected()) {
-                    configureInputDialog.getSelectAttackLabel().setEnabled(false);
-                    selectAttackComboBox.setEnabled(false);
-                } else {
-                    configureInputDialog.getSelectAttackLabel().setEnabled(true);
-                    selectAttackComboBox.setEnabled(true);
-                }
+        keepStaticRecommendationsCheckBox.addActionListener((ActionEvent e) -> {
+            if (keepStaticRecommendationsCheckBox.isSelected()) {
+                configureInputDialog.getSelectAttackLabel().setEnabled(false);
+                selectAttackComboBox.setEnabled(false);
+            } else {
+                configureInputDialog.getSelectAttackLabel().setEnabled(true);
+                selectAttackComboBox.setEnabled(true);
             }
         });
 
         //Attack Scenario Radio Button
-        attackScenarioRadioButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setMeanOffsetControls(false);
-                keepStaticRecommendationsCheckBox.setEnabled(true);
-            }
+        attackScenarioRadioButton.addActionListener((ActionEvent e) -> {
+            setMeanOffsetControls(false);
+            keepStaticRecommendationsCheckBox.setEnabled(true);
         });
 
         //Attack Scenario Ideal Radio Button
-        attackScenarioIdealRadioButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setMeanOffsetControls(false);
-                keepStaticRecommendationsCheckBox.setEnabled(false);
-            }
+        attackScenarioIdealRadioButton.addActionListener((ActionEvent e) -> {
+            setMeanOffsetControls(false);
+            keepStaticRecommendationsCheckBox.setEnabled(false);
         });
-
+        
+       
         //Show Algorithm Analysis Radio Button
-        showAlgorithmAnalysisButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                chooseAnalysisDialog.dispose();
-
-                String frameTitle = "Recommendation Analysis For \"Node " + selectDetectedNodeComboBox.getSelectedItem() + "\"";
-                String graphHeading = "";
-
-                if (evaluatePerformanceCheckBox.isSelected()) {
-                    if (attackScenarioRadioButton.isSelected()) {
-                        graphHeading = "VALIDATION AGAINST ATTACKS , ATTACK TYPE: " + ((String) selectAttackComboBox.getSelectedItem()).toUpperCase() + ", % DISHONEST RA=" + percentDishonestRASpinner.getValue();
-                    } else if (attackScenarioIdealRadioButton.isSelected()) {
-                        graphHeading = "VALIDATION AGAINST ATTACKS , ATTACK TYPE: " + ((String) selectAttackComboBox.getSelectedItem()).toUpperCase() + " (IDEAL MODE), % DISHONEST RA=" + percentDishonestRASpinner.getValue();
-                    } else {
-                        graphHeading = "VALIDATION AGAINST DEVIATION , ATTACK TYPE: " + ((String) selectAttackComboBox.getSelectedItem()).toUpperCase() + " , MO LEVEL= " + meanOffsetValueComboBox.getSelectedItem() + ", % DISHONEST RA=" + percentDishonestRASpinner.getValue();
-                    }
+        showAlgorithmAnalysisButton.addActionListener((ActionEvent e) -> {
+            chooseAnalysisDialog.dispose();
+            
+            String frameTitle = "Recommendation Analysis For \"Node " + selectDetectedNodeComboBox.getSelectedItem() + "\"";
+            String graphHeading = "";
+            
+            if (evaluatePerformanceCheckBox.isSelected()) {
+                if (attackScenarioRadioButton.isSelected()) {
+                    graphHeading = "VALIDATION AGAINST ATTACKS , ATTACK TYPE: " + ((String) selectAttackComboBox.getSelectedItem()).toUpperCase() + ", % DISHONEST RA=" + percentDishonestRASpinner.getValue();
+                } else if (attackScenarioIdealRadioButton.isSelected()) {
+                    graphHeading = "VALIDATION AGAINST ATTACKS , ATTACK TYPE: " + ((String) selectAttackComboBox.getSelectedItem()).toUpperCase() + " (IDEAL MODE), % DISHONEST RA=" + percentDishonestRASpinner.getValue();
                 } else {
-                    graphHeading = "RANDOM SCENARIO";
+                    graphHeading = "VALIDATION AGAINST DEVIATION , ATTACK TYPE: " + ((String) selectAttackComboBox.getSelectedItem()).toUpperCase() + " , MO LEVEL= " + meanOffsetValueComboBox.getSelectedItem() + ", % DISHONEST RA=" + percentDishonestRASpinner.getValue();
                 }
-                //Set Parameters for MO Graph
-                boolean moMode = evaluatePerformanceCheckBox.isSelected() & meanOffsetScenarioRadioButton.isSelected();
-                if (moMode) {
-                    MOGraphParameters moGraphParameters = scenarioPane.getmOGraphParameters();
-                    paramSet.add(moGraphParameters.getPercentDishonestRA() + "-" + moGraphParameters.getRecommendedTrustActual() + "-" + moGraphParameters.getRecommendedTrustWOD() + "-" + moGraphParameters.getRecommendedTrustWD());
-
-                    Iterator<String> iterator = paramSet.iterator();
-                    while (iterator.hasNext()) {
-                        System.out.println("PARAMS:" + iterator.next());
-                    }
-                }
-                /*
-                 System.out.println("RCC BEFORE ANALYSIS DISPLAY:");
-                 for(int i:scenarioPane.getRecommendationsForNode(selectDetectedNodeComboBox.getSelectedIndex())){
-                 System.out.print(i+",");
-                 }
-                 */
-                new RecommendationAnalyzer_v2(scenarioPane.getRecommendationsForNode(selectDetectedNodeComboBox.getSelectedIndex()), paramSet, moMode, frameTitle, graphHeading).setVisible(true);
+            } else {
+                graphHeading = "RANDOM SCENARIO";
             }
+            
+            //Set Parameters for MO Graph
+            boolean moMode = evaluatePerformanceCheckBox.isSelected() & meanOffsetScenarioRadioButton.isSelected();
+            if (moMode) {
+                MOGraphParameters moGraphParameters = scenarioPane.getmOGraphParameters();
+                paramSet.add(moGraphParameters.getPercentDishonestRA() + "-" + moGraphParameters.getRecommendedTrustActual() + "-" + moGraphParameters.getRecommendedTrustWOD() + "-" + moGraphParameters.getRecommendedTrustWD());
+                
+                Iterator<String> iterator = paramSet.iterator();
+                while (iterator.hasNext()) {
+                    System.out.println("PARAMS:" + iterator.next());
+                }
+            }
+            /*
+            System.out.println("RCC BEFORE ANALYSIS DISPLAY:");
+            for(int i:scenarioPane.getRecommendationsForNode(selectDetectedNodeComboBox.getSelectedIndex())){
+            System.out.print(i+",");
+            }
+            */
+            new RecommendationAnalyzer_v2(scenarioPane.getRecommendationsForNode(selectDetectedNodeComboBox.getSelectedIndex()),trustEvalApp1RadioButton.isSelected(), paramSet, moMode, frameTitle, graphHeading).setVisible(true);
         });
 
         //Show Graphical Analysis Button
-        showGraphicalAnalysisButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //System.out.println("SIZE OF EXT:" + externalNodeCountList.size() + " SIZE OF POWER:" + powerValuesList.size());
-                /*if (memberNodeCountList.size() <= 9) {
-                 new GraphsFrame(memberNodeCountList, externalNodeCountList, powerValuesList).setVisible(true);
-                 } else {
-                 JOptionPane.showMessageDialog(null, "Please Reset the Graph Trend!!", "Alert", JOptionPane.WARNING_MESSAGE);
-                 }*/
-            }
+        showGraphicalAnalysisButton.addActionListener((ActionEvent e) -> {
         });
 
         //Reset Graphical Analysis Button
-        resetGraphicalAnalysisButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (JOptionPane.showConfirmDialog(null, "Are you sure want to reset all the graphs?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-                    /*  memberNodeCountList.removeAll(memberNodeCountList);
-                     externalNodeCountList.removeAll(externalNodeCountList);
-                     powerValuesList.removeAll(powerValuesList);*/
-                }
+        resetGraphicalAnalysisButton.addActionListener((ActionEvent e) -> {
+            if (JOptionPane.showConfirmDialog(null, "Are you sure want to reset all the graphs?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+                /*  memberNodeCountList.removeAll(memberNodeCountList);
+                externalNodeCountList.removeAll(externalNodeCountList);
+                powerValuesList.removeAll(powerValuesList);*/
             }
         });
 
-        meanOffsetValueComboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                paramSet.removeAll(paramSet);
-            }
+        meanOffsetValueComboBox.addItemListener((ItemEvent e) -> {
+            paramSet.removeAll(paramSet);
         });
 
-        selectAttackComboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                //System.out.println("CHANGED!");
-                paramSet.removeAll(paramSet);
-            }
+        selectAttackComboBox.addItemListener((ItemEvent e) -> {
+            paramSet.removeAll(paramSet);
         });
 
     }

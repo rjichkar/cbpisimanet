@@ -23,6 +23,7 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
     private String graphHeading;
     private TreeSet moParamSet;
     private boolean moModeSelected;
+    private boolean selectTrustEvalApproach;
 
     /*Reference Data Set*/
     //Data Set 1
@@ -61,6 +62,7 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
                 2, 3, 1, 2, 3,
                 1, 2, 3, 1, 2,
                 3, 1, 2, 3, 1};
+
     // private static int recommendations[] = {0, 2, 1, 0, 3, 2, 0, 0, 2, 2};
     /**
      * Creates new form TabbedPane
@@ -76,11 +78,12 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
         computeAlgorithmResults(recommendations);
     }
 
-    public RecommendationAnalyzer_v2(int recommendations[], TreeSet moParamSet, boolean moModeSelected, String frameTitle, String graphHeading) {
+    public RecommendationAnalyzer_v2(int recommendations[],boolean selectTrustEvalApproach, TreeSet moParamSet, boolean moModeSelected, String frameTitle, String graphHeading) {
         initComponents();
         setTitle(frameTitle);
         this.moParamSet = moParamSet;
         this.moModeSelected = moModeSelected;
+        this.selectTrustEvalApproach=selectTrustEvalApproach;
         this.graphHeading = graphHeading;
         computeAlgorithmResults(recommendations);
     }
@@ -466,10 +469,17 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
             }
 
             //Calculate Trust Value
-            String trustParams[] = computeTrustValueMethod1(freqList, rDomainFilteredClasses).split("-");
-
-            double trustValue = Double.parseDouble(trustParams[0]);
-            int freqHighestIndex = Integer.parseInt(trustParams[1]);
+            double trustValue = 0.0;
+            int freqHighestIndex = -1;
+            String trustParams[] = null;
+            if (selectTrustEvalApproach) {
+                trustParams = computeTrustValueMethodFreqCount(freqList, rDomainFilteredClasses).split("-");
+                trustValue = Double.parseDouble(trustParams[0]);
+                freqHighestIndex = Integer.parseInt(trustParams[1]);
+            } else {
+                trustValue = computeTrustValueMethodAveraging(freqList, rDomainFilteredClasses);
+                trustValue = Double.parseDouble(dformat.format(trustValue));
+            }
 
             //double trustValue = computeTrustValueMethod2(srDomainClasses, rDomainFilteredClasses);
             String trustDecision = "";
@@ -495,7 +505,7 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
             Object[][] data = {
                 {"Dishonest Recommendation Classes", dishonestReccomendationClasses},
                 {"Final Trust Value", trustValue},
-                {"Rcc Frequency", freqList.get(freqHighestIndex)},
+                {"Rcc Frequency", (freqHighestIndex == -1) ? "N.A" : freqList.get(freqHighestIndex)},
                 {"Trust Level", trustDecision}
             };
             //Set Table model for Result Table
@@ -512,7 +522,7 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
         }
     }
 
-    private String computeTrustValueMethod1(ArrayList<Integer> freqList, String rDomainFilteredClasses[]) {
+    private String computeTrustValueMethodFreqCount(ArrayList<Integer> freqList, String rDomainFilteredClasses[]) {
         int freqHighest = freqList.get(0);
         int freqHighestIndex = 0;
         for (int i = 0; i < freqList.size(); i++) {
@@ -522,6 +532,11 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
             }
         }
         return rDomainFilteredClasses[freqHighestIndex] + "-" + freqHighestIndex;
+    }
+
+    private double computeTrustValueMethodAveraging(ArrayList<Integer> freqList, String rDomainFilteredClasses[]) {
+        double sumTotal = sumArray(rDomainFilteredClasses);
+        return (sumTotal / rDomainFilteredClasses.length);
     }
 
     private double computeTrustValueMethod2(String[] srDomainClasses, String[] rDomainFilteredClasses) {
@@ -567,7 +582,7 @@ public final class RecommendationAnalyzer_v2 extends javax.swing.JFrame {
     private double sumArray(Object[] strArray) {
         double sum = 0.0;
         for (Object value : strArray) {
-            sum += (Double) value;
+            sum += Double.parseDouble((String)value);
         }
         return sum;
     }

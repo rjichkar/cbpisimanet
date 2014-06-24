@@ -55,6 +55,7 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         radioButtonGroup = new javax.swing.ButtonGroup();
+        trustEvalButtonGroup = new javax.swing.ButtonGroup();
         ConfigureInputPanel = new javax.swing.JPanel();
         memebrNodesLabel = new javax.swing.JLabel();
         enteringNodesLabel = new javax.swing.JLabel();
@@ -73,10 +74,16 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
         selectAttackComboBox = new javax.swing.JComboBox();
         keepStaticRecommendationsCheckBox = new javax.swing.JCheckBox();
         closeInputDialogButton = new javax.swing.JButton();
+        trustEvalApp1RadioButton = new javax.swing.JRadioButton();
+        trustEvalApp2RadioButton = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
 
         radioButtonGroup.add(meanOffsetScenarioRadioButton);
         radioButtonGroup.add(attackScenarioRadioButton);
         radioButtonGroup.add(attackScenarioIdealRadioButton);
+
+        trustEvalButtonGroup.add(trustEvalApp1RadioButton);
+        trustEvalButtonGroup.add(trustEvalApp2RadioButton);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Configure Input");
@@ -163,16 +170,16 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
             }
         });
         ConfigureInputPanel.add(generateSceneInputDialogButton);
-        generateSceneInputDialogButton.setBounds(80, 380, 140, 23);
+        generateSceneInputDialogButton.setBounds(80, 430, 140, 23);
 
         selectAttackLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         selectAttackLabel.setText("Select Attack Type :");
         ConfigureInputPanel.add(selectAttackLabel);
-        selectAttackLabel.setBounds(20, 280, 130, 14);
+        selectAttackLabel.setBounds(20, 350, 130, 14);
 
         selectAttackComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Bad Mouthing", "Ballot Stuffing", "Random Opinion" }));
         ConfigureInputPanel.add(selectAttackComboBox);
-        selectAttackComboBox.setBounds(140, 280, 190, 20);
+        selectAttackComboBox.setBounds(140, 350, 190, 20);
 
         keepStaticRecommendationsCheckBox.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         keepStaticRecommendationsCheckBox.setText("Keep Recommendations Static ");
@@ -182,7 +189,7 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
             }
         });
         ConfigureInputPanel.add(keepStaticRecommendationsCheckBox);
-        keepStaticRecommendationsCheckBox.setBounds(140, 340, 240, 23);
+        keepStaticRecommendationsCheckBox.setBounds(140, 390, 240, 23);
 
         closeInputDialogButton.setText("Close");
         closeInputDialogButton.addActionListener(new java.awt.event.ActionListener() {
@@ -191,12 +198,38 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
             }
         });
         ConfigureInputPanel.add(closeInputDialogButton);
-        closeInputDialogButton.setBounds(230, 380, 150, 23);
+        closeInputDialogButton.setBounds(230, 430, 150, 23);
+
+        trustEvalApp1RadioButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        trustEvalApp1RadioButton.setText("Highest Frequency Approach");
+        trustEvalApp1RadioButton.setAutoscrolls(true);
+        trustEvalApp1RadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                trustEvalApp1RadioButtonActionPerformed(evt);
+            }
+        });
+        ConfigureInputPanel.add(trustEvalApp1RadioButton);
+        trustEvalApp1RadioButton.setBounds(210, 276, 220, 23);
+
+        trustEvalApp2RadioButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        trustEvalApp2RadioButton.setText("Averaging  Approach");
+        trustEvalApp2RadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                trustEvalApp2RadioButtonActionPerformed(evt);
+            }
+        });
+        ConfigureInputPanel.add(trustEvalApp2RadioButton);
+        trustEvalApp2RadioButton.setBounds(210, 306, 200, 23);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setText("Trust Evaluation Approach:");
+        ConfigureInputPanel.add(jLabel1);
+        jLabel1.setBounds(20, 280, 180, 14);
 
         getContentPane().add(ConfigureInputPanel);
-        ConfigureInputPanel.setBounds(0, 0, 470, 440);
+        ConfigureInputPanel.setBounds(0, 0, 470, 490);
 
-        setSize(new java.awt.Dimension(489, 483));
+        setSize(new java.awt.Dimension(489, 530));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -224,6 +257,14 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
     private void attackScenarioIdealRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attackScenarioIdealRadioButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_attackScenarioIdealRadioButtonActionPerformed
+
+    private void trustEvalApp2RadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trustEvalApp2RadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_trustEvalApp2RadioButtonActionPerformed
+
+    private void trustEvalApp1RadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trustEvalApp1RadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_trustEvalApp1RadioButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -343,6 +384,22 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
         this.attackScenarioIdealRadioButton = attackScenarioIdealRadioButton;
     }
 
+    public JRadioButton getTrustEvalApp1RadioButton() {
+        return trustEvalApp1RadioButton;
+    }
+
+    public void setTrustEvalApp1RadioButton(JRadioButton trustEvalApp1RadioButton) {
+        this.trustEvalApp1RadioButton = trustEvalApp1RadioButton;
+    }
+
+    public JRadioButton getTrustEvalApp2RadioButton() {
+        return trustEvalApp2RadioButton;
+    }
+
+    public void setTrustEvalApp2RadioButton(JRadioButton trustEvalApp2RadioButton) {
+        this.trustEvalApp2RadioButton = trustEvalApp2RadioButton;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ConfigureInputPanel;
@@ -354,6 +411,7 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
     private javax.swing.JSpinner externalNodeCountSpinner;
     private javax.swing.JButton generateSceneInputDialogButton;
     private javax.swing.JSpinner inputNodesCountSpinner;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JCheckBox keepStaticRecommendationsCheckBox;
     private javax.swing.JRadioButton meanOffsetScenarioRadioButton;
     private javax.swing.JComboBox meanOffsetValueComboBox;
@@ -364,5 +422,8 @@ public class ConfigureInputDialog extends javax.swing.JDialog {
     private javax.swing.ButtonGroup radioButtonGroup;
     private javax.swing.JComboBox selectAttackComboBox;
     private javax.swing.JLabel selectAttackLabel;
+    private javax.swing.JRadioButton trustEvalApp1RadioButton;
+    private javax.swing.JRadioButton trustEvalApp2RadioButton;
+    private javax.swing.ButtonGroup trustEvalButtonGroup;
     // End of variables declaration//GEN-END:variables
 }
